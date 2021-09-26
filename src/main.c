@@ -20,6 +20,10 @@ LIBRERIAS:
 /*------------------------------------------------------------------------------
 DEFINICIONES:
 ------------------------------------------------------------------------------*/
+/*Parametros de configuración del TIM3 para actualizar el LCD cada 250mseg:*/
+#define Freq 	 4
+#define TimeBase 200e3
+
 /*Pines de conexion del teclado matricial: */
 #define C1_Port	GPIOD
 #define C2_Port	GPIOD
@@ -73,6 +77,9 @@ CONFIGURACION DEL MICRO:
 	INIT_DO(R3_Port, R3);
 	INIT_DO(R4_Port, R4);
 
+	/*Inicialización del TIM3:*/
+	INIT_TIM3();
+	SET_TIM3(TimeBase, Freq);
 
 /*------------------------------------------------------------------------------
 BUCLE PRINCIPAL:
@@ -82,6 +89,14 @@ BUCLE PRINCIPAL:
 
     }
 }
+/*------------------------------------------------------------------------------
+INTERRUPCIONES:
+------------------------------------------------------------------------------*/
+/*Interrupcion al vencimiento de cuenta de TIM3 cada 250mseg/4Hz:*/
+void TIM3_IRQHandler(void)
+{
+
+}
 
 /*Interrupcion al pulso por PD0-C1:*/
 void EXTI0_IRQHandler(void)
@@ -89,8 +104,15 @@ void EXTI0_IRQHandler(void)
   /*Si la interrupcion fue por linea 0 (PD0 - C1):*/
   if(EXTI_GetITStatus(EXTI_Line0) != RESET)
   {
+	/*Si ademas de estar C1 en 1 tambien esta R1 en 1, entonces el switch pulsado es S1:*/
 
-    /*Clear the EXTI line 0 pending bit:*/
+	/*Si ademas de estar C1 en 1 tambien esta R2 en 1, entonces el switch pulsado es S4:*/
+
+	/*Si ademas de estar C1 en 1 tambien esta R3 en 1, entonces el switch pulsado es S7:*/
+
+	/*Si ademas de estar C1 en 1 tambien esta R4 en 1, entonces el switch pulsado es Sast:*/
+
+	/*Clear the EXTI line 0 pending bit:*/
     EXTI_ClearITPendingBit(EXTI_Line0);
   }
 }
@@ -101,6 +123,13 @@ void EXTI1_IRQHandler(void)
   /*Si la interrupcion fue por linea 1 (PD1 - C2):*/
   if(EXTI_GetITStatus(EXTI_Line1) != RESET)
   {
+	/*Si ademas de estar C2 en 1 tambien esta R1 en 1, entonces el switch pulsado es S2:*/
+
+	/*Si ademas de estar C2 en 1 tambien esta R2 en 1, entonces el switch pulsado es S5:*/
+
+	/*Si ademas de estar C2 en 1 tambien esta R3 en 1, entonces el switch pulsado es S8:*/
+
+	/*Si ademas de estar C2 en 1 tambien esta R4 en 1, entonces el switch pulsado es S0:*/
 
     /*Clear the EXTI line 1 pending bit:*/
     EXTI_ClearITPendingBit(EXTI_Line1);
@@ -114,6 +143,13 @@ void EXTI2_IRQHandler(void)
   /*Si la interrupcion fue por linea 2 (PD2 - C3):*/
   if(EXTI_GetITStatus(EXTI_Line2) != RESET)
   {
+	/*Si ademas de estar C3 en 1 tambien esta R1 en 1, entonces el switch pulsado es S3:*/
+
+	/*Si ademas de estar C3 en 1 tambien esta R2 en 1, entonces el switch pulsado es S6:*/
+
+	/*Si ademas de estar C3 en 1 tambien esta R3 en 1, entonces el switch pulsado es S9:*/
+
+	/*Si ademas de estar C3 en 1 tambien esta R4 en 1, entonces el switch pulsado es Snum:*/
 
     /*Clear the EXTI line 2 pending bit:*/
     EXTI_ClearITPendingBit(EXTI_Line2);
@@ -127,6 +163,13 @@ void EXTI3_IRQHandler(void)
   /*Si la interrupcion fue por linea 3 (PE3 - C4):*/
   if(EXTI_GetITStatus(EXTI_Line3) != RESET)
   {
+	/*Si ademas de estar C4 en 1 tambien esta R1 en 1, entonces el switch pulsado es SA:*/
+
+	/*Si ademas de estar C4 en 1 tambien esta R2 en 1, entonces el switch pulsado es SB:*/
+
+	/*Si ademas de estar C4 en 1 tambien esta R3 en 1, entonces el switch pulsado es SC:*/
+
+	/*Si ademas de estar C4 en 1 tambien esta R4 en 1, entonces el switch pulsado es SD:*/
 
     /*Clear the EXTI line 3 pending bit:*/
     EXTI_ClearITPendingBit(EXTI_Line3);
